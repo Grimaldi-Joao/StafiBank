@@ -1,22 +1,27 @@
-package com.Test.StafiBank.dto.contaDto;
+package com.Test.StafiBank.dto.contaDto.response;
 
 import com.Test.StafiBank.entities.Conta;
 
-public class ContaGet {
-
+public class ContaResponseDTO {
+    
     private Long idConta;
     private String nomeUsuario;
+    private Long idContaUsuario;
 
     // Construtores
-    public ContaGet() {
+    public ContaResponseDTO() {
     }
 
-    public ContaGet(Conta Obj) {
+    public ContaResponseDTO(Conta Obj) {
         this.idConta = Obj.getId_Conta();
         this.nomeUsuario = Obj.getUsuarioNome().getNome();
+        this.idContaUsuario = Obj.getFk_Usuario_Id().getId();
     }
 
-    // Getters and setters
+    public Long getIdContaUsuario() {
+        return idContaUsuario;
+    }
+
     public Long getIdConta() {
         return idConta;
     }
@@ -31,5 +36,8 @@ public class ContaGet {
 
     public void setNomeUsuario(String nomeUsuario) {
         this.nomeUsuario = nomeUsuario;
+    }
+    public void setIdContaUsuario(Long idContaUsuario) {
+        this.idContaUsuario = idContaUsuario;
     }
 }
