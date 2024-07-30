@@ -1,4 +1,6 @@
-package com.testeStefanini.StefaniniSpring.Resource.Exception.Enum;
+package com.Test.StafiBank.resource.exptions.enuns;
+
+
 
 public enum ExceptionEnum {
     Database_error(1),

@@ -49,9 +49,6 @@ public class Transferencia implements Serializable{
     public Conta getRemetente() {
         return remetente;
     }
-    public static long getSerialversionuid() {
-        return serialVersionUID;
-    }
     public String getTipo_Transferencia() {
         return tipo_Transferencia;
     }
