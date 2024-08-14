@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 
 import com.Test.StafiBank.entities.Conta;
 import com.Test.StafiBank.repository.ContaRepository;
+import com.Test.StafiBank.resource.exptions.enuns.ExceptionEnum;
+import com.Test.StafiBank.service.exeptions.DatabaseException;
+import com.Test.StafiBank.service.exeptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -25,31 +28,29 @@ public class ContaService {
 
     public Conta findById(Long id){
         Optional<Conta> obj = repository.findById(id);
-        return obj.orElseThrow();
+        return obj.orElseThrow(()-> new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found));
     }
 
-        public void delete(Long id) {
-		try {
-			repository.deleteById(id);
-		} catch (EmptyResultDataAccessException e) {
-			throw new ;
-		} catch (DataIntegrityViolationException e) {
-			throw new ;
-		}
-	}
-        /*
-         * catch(RunTimeExepition e){
-         * e.printStackTrace();
-         * }
-         * use esse codigo para imprimir o erro no terminal e descobri como trata-lo
-         */
+    public Conta insert(Conta objConta) {
+        return repository.save(objConta);
+    }
 
-    public Conta update(Long id, Conta objConta) {
-		try {
-			Conta entityUpdate = repository.getReferenceById(id);
-			return repository.save(entityUpdate);
-		} catch (EntityNotFoundException e) {
-			throw new ;
-		}	
-	}
+    public Conta update(Long id, Conta dto) {
+        try {
+            Conta entityUpdate = repository.getReferenceById(id);
+            return repository.save(entityUpdate);
+        } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
+        }
+    }
+
+    public void delete(Long id) {
+        try {
+            repository.deleteById(id);
+        } catch (EmptyResultDataAccessException e) {
+            throw new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found);
+        } catch (DataIntegrityViolationException e) {
+            throw new DatabaseException(e.getMessage(), ExceptionEnum.Database_error);
+        }
+    }
 }

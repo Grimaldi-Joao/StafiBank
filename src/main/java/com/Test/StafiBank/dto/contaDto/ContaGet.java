@@ -13,7 +13,7 @@ public class ContaGet {
 
     public ContaGet(Conta Obj) {
         this.idConta = Obj.getId_Conta();
-        this.nomeUsuario = Obj.getUsuarioNome().getNome();
+        this.nomeUsuario = Obj.getFk_Usuario_Id().getNome();
     }
 
     // Getters and setters

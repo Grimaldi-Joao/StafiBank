@@ -1,19 +1,29 @@
 package com.Test.StafiBank.dto.usuarioDto;
 
+import com.Test.StafiBank.entities.Usuario;
+import com.Test.StafiBank.entities.enun.tipoEnum;
+
 public class UsuarioGet {
 
     private Long id_Usuario;
     private String nome;
     private String email;
-    private String tipo;
+    private Integer tipo;
 
     public UsuarioGet(){}
 
-    public UsuarioGet(Long id, String nome, String email, String tipo){
+    public UsuarioGet(Long id, String nome, String email, tipoEnum tipo){
         this.id_Usuario = id;
         this.email = email;
         this.nome = nome;
-        this.tipo = tipo;
+        settipoEnum(tipo);
+    }
+
+    public UsuarioGet(Usuario Obj) {
+        this.id_Usuario = Obj.getId();
+        this.nome = Obj.getNome();
+        this.email = Obj.getEmail();
+        
     }
 
     public String getEmail() {
@@ -24,8 +34,8 @@ public class UsuarioGet {
     }public String getNome() {
         return nome;
     }
-    public String getTipo() {
-        return tipo;
+    public tipoEnum gettipoEnum() {
+        return tipoEnum.valueOf(tipo);
     }
     public void setEmail(String email) {
         this.email = email;
@@ -36,7 +46,9 @@ public class UsuarioGet {
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void settipoEnum(tipoEnum tipoEnum) {
+        if (tipoEnum != null) {
+            this.tipo = tipoEnum.getCode();
+        }
     }
 }

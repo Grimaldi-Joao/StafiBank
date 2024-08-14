@@ -1,9 +1,8 @@
 package com.Test.StafiBank.entities;
 
 import java.io.Serializable;
-
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -11,6 +10,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import com.Test.StafiBank.entities.enun.tipoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_usuario")
@@ -22,23 +23,31 @@ public class Usuario implements Serializable {
     private Long id_Usuario;
     private String nome;
     private String email;
-    private String tipo;
+    private String cpfCnpj;
+    private Integer tipo;
     private String senha;
 
-    @OneToMany(mappedBy = "usuario")
-    private List<Conta> contas;
+    @JsonIgnore
+    @OneToMany(mappedBy = "fk_Usuario_Id") // Referenciando o campo 'fk_Usuario_Id' em 'Conta'
+    private Set<Conta> contas = new HashSet<>();
 
     public Usuario(){}
 
-    public Usuario(Long id,String nome,String email,String tipo,String senha){
+    public Usuario(Long idUsuario, String nome, String email, tipoEnum tipo, String cpfCnpj, String senha) {
         super();
-        this.id_Usuario = id;
         this.nome = nome;
         this.email = email;
-        this.tipo = tipo;
+        settipoEnum(tipo);
+        this.cpfCnpj = cpfCnpj;
         this.senha = senha;
     }
 
+    public String getCpfCnpj() {
+        return cpfCnpj;
+    }
+    public Set<Conta> getContas() {
+        return contas;
+    }
     public Long getId() {
         return id_Usuario;
     }
@@ -51,8 +60,8 @@ public class Usuario implements Serializable {
     public String getSenha() {
         return senha;
     }
-    public String getTipo() {
-        return tipo;
+    public tipoEnum gettipoEnum() {
+        return tipoEnum.valueOf(tipo);
     }
     public void setId(Long id) {
         this.id_Usuario = id;
@@ -66,8 +75,13 @@ public class Usuario implements Serializable {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public void settipoEnum(tipoEnum tipoEnum) {
+        if (tipoEnum != null) {
+            this.tipo = tipoEnum.getCode();
+        }
+    }
+    public void setCpfCnpj(String cpfCnpj) {
+        this.cpfCnpj = cpfCnpj;
     }
 
     public int hashCode(){
@@ -94,5 +108,4 @@ public class Usuario implements Serializable {
         }
         return true;
     }
-
 }

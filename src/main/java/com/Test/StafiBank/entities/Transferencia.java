@@ -3,6 +3,8 @@ package com.Test.StafiBank.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import com.Test.StafiBank.entities.enun.tipoTransferenciaEnum;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -19,7 +21,7 @@ public class Transferencia implements Serializable{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id_Transferencia;
-    private String tipo_Transferencia;//Mudar para enum
+    private Integer tipo_Transferencia;//Mudar para enum
     private BigDecimal valor_Transferencia;
     
     @ManyToOne
@@ -32,9 +34,10 @@ public class Transferencia implements Serializable{
 
     public Transferencia(){}
 
-    public Transferencia(Long id, String tipo, BigDecimal valor, Conta remetente, Conta destinatario){
+    public Transferencia(Long id, tipoTransferenciaEnum tipo, BigDecimal valor, Conta remetente, Conta destinatario){
+        super();
         this.id_Transferencia = id;
-        this.tipo_Transferencia = tipo;
+        settipoTransferenciaEnum(tipo);
         this.valor_Transferencia = valor;
         this.remetente = remetente;
         this.destinatario = destinatario;
@@ -48,9 +51,6 @@ public class Transferencia implements Serializable{
     }
     public Conta getRemetente() {
         return remetente;
-    }
-    public String getTipo_Transferencia() {
-        return tipo_Transferencia;
     }
     public BigDecimal getValor_Transferencia() {
         return valor_Transferencia;
@@ -66,12 +66,19 @@ public class Transferencia implements Serializable{
     public void setRemetente(Conta remetente) {
         this.remetente = remetente;
     }
-    public void setTipo_Transferencia(String tipo_Transferencia) {
-        this.tipo_Transferencia = tipo_Transferencia;
-    }
     public void setValor_Transferencia(BigDecimal valor_Transferencia) {
         this.valor_Transferencia = valor_Transferencia;
     }
+
+    public tipoTransferenciaEnum gettipoTransferenciaEnum() {
+        return tipoTransferenciaEnum.valueOf(tipo_Transferencia);
+    }
+    public void settipoTransferenciaEnum(tipoTransferenciaEnum tipoTransferenciaEnum) {
+        if (tipoTransferenciaEnum != null) {
+            this.tipo_Transferencia = tipoTransferenciaEnum.getCode();
+        }
+    }
+    
 
     public int hashCode(){
         final int prime = 31;

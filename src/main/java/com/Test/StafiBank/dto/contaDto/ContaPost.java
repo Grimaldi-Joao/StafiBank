@@ -14,7 +14,7 @@ public class ContaPost {
 
     public ContaPost(Conta Obj) {
         this.idConta = Obj.getId_Conta();
-        this.nomeUsuario = Obj.getUsuarioNome().getNome();
+        this.nomeUsuario = Obj.getFk_Usuario_Id().getNome();
         this.idUsuario = Obj.getFk_Usuario_Id().getId();
     }
 

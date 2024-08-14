@@ -2,7 +2,6 @@ package com.Test.StafiBank.entities;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-
 import java.util.List;
 
 import jakarta.persistence.Entity;
@@ -25,12 +24,8 @@ public class Conta implements Serializable {
     private BigDecimal Carteira;
 
     @ManyToOne
-    @JoinColumn(name = "fk_usuario_id")
+    @JoinColumn(name = "fk_usuario_id") // Chave estrangeira referenciando Usuario
     private Usuario fk_Usuario_Id;
-
-    @ManyToOne
-    @JoinColumn(name = "nome", referencedColumnName = "nome", insertable = false, updatable = false)
-    private Usuario usuarioNome;
 
     @OneToMany(mappedBy = "remetente")
     private List<Transferencia> transferenciasRemetente;
@@ -38,14 +33,13 @@ public class Conta implements Serializable {
     @OneToMany(mappedBy = "destinatario")
     private List<Transferencia> transferenciasDestinatario;
 
-    public Object id_Transferencia;
-
     public Conta(){}
 
-    public Conta(Long id){
+    public Conta(Long id, Usuario Usuario){
         super();
         this.id_Conta = id;
         this.Carteira = new BigDecimal(0.0);
+        this.fk_Usuario_Id = Usuario;
     }
 
     public Long getId_Conta() {
@@ -57,38 +51,28 @@ public class Conta implements Serializable {
     public Usuario getFk_Usuario_Id() {
         return fk_Usuario_Id;
     }
-    public Object getId_Transferencia() {
-        return id_Transferencia;
-    }
-    public Usuario getUsuarioNome() {
-        return usuarioNome;
-    }
     public List<Transferencia> getTransferenciasDestinatario() {
         return transferenciasDestinatario;
     }
     public List<Transferencia> getTransferenciasRemetente() {
         return transferenciasRemetente;
     }
+
     public void setId_Conta(Long id_Conta) {
         this.id_Conta = id_Conta;
     }
     public void setCarteira(BigDecimal carteira) {
         Carteira = carteira;
     }
-    public void setUsuarioNome(Usuario usuarioNome) {
-        this.usuarioNome = usuarioNome;
+    public void setFk_Usuario_Id(Usuario fk_Usuario_Id) {
+        this.fk_Usuario_Id = fk_Usuario_Id;
     }
+
     public void setTransferenciasDestinatario(List<Transferencia> transferenciasDestinatario) {
         this.transferenciasDestinatario = transferenciasDestinatario;
     }
     public void setTransferenciasRemetente(List<Transferencia> transferenciasRemetente) {
         this.transferenciasRemetente = transferenciasRemetente;
-    }
-    public void setId_Transferencia(Object id_Transferencia) {
-        this.id_Transferencia = id_Transferencia;
-    }
-    public void setFk_Usuario_Id(Usuario fk_Usuario_Id) {
-        this.fk_Usuario_Id = fk_Usuario_Id;
     }
 
     public int hashCode(){
