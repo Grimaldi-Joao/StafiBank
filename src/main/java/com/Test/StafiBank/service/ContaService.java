@@ -1,5 +1,6 @@
 package com.Test.StafiBank.service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import com.Test.StafiBank.entities.Conta;
 import com.Test.StafiBank.repository.ContaRepository;
 import com.Test.StafiBank.resource.exptions.enuns.ExceptionEnum;
 import com.Test.StafiBank.service.exeptions.DatabaseException;
+import com.Test.StafiBank.service.exeptions.InsufficientBalanceException;
 import com.Test.StafiBank.service.exeptions.ResourceNotFoundException;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -35,11 +37,32 @@ public class ContaService {
         return repository.save(objConta);
     }
 
-    public Conta update(Long id, Conta dto) {
+    public Conta update(Long id, BigDecimal deposito) {
         try {
             Conta entityUpdate = repository.getReferenceById(id);
+            entityUpdate.setCarteira(entityUpdate.getCarteira());
             return repository.save(entityUpdate);
         } catch (EntityNotFoundException e) {
+            throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
+        }
+    }
+
+    public Conta depositar(Long id, BigDecimal deposito){
+        try {
+            Conta entityUpdate = repository.getReferenceById(id);
+            entityUpdate.setCarteira(entityUpdate.getCarteira().add(deposito));
+            return repository.save(entityUpdate);
+        } catch (InsufficientBalanceException e) {
+            throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
+        }
+    }
+
+    public Conta sacar(Long id, BigDecimal saque){
+        try {
+            Conta entityUpdate = repository.getReferenceById(id);
+            entityUpdate.setCarteira(entityUpdate.getCarteira().subtract(saque));
+            return repository.save(entityUpdate);
+        } catch (InsufficientBalanceException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
         }
     }

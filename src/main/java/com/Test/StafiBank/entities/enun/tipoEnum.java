@@ -19,6 +19,6 @@ public enum tipoEnum {
                 return value;
             }
         }
-        throw new IllegalArgumentException("Invalid OrderStatus code");
+        throw new IllegalArgumentException("Invalid User type code");
     }
 }

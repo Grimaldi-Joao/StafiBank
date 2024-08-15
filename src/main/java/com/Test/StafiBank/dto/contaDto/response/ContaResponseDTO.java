@@ -1,14 +1,15 @@
 package com.Test.StafiBank.dto.contaDto.response;
 
 import com.Test.StafiBank.entities.Conta;
+import java.math.BigDecimal;
 
 public class ContaResponseDTO {
     
     private Long idConta;
     private String nomeUsuario;
     private Long idContaUsuario;
+    private BigDecimal Carteira;
 
-    // Construtores
     public ContaResponseDTO() {
     }
 
@@ -16,8 +17,12 @@ public class ContaResponseDTO {
         this.idConta = Obj.getId_Conta();
         this.nomeUsuario = Obj.getFk_Usuario_Id().getNome();
         this.idContaUsuario = Obj.getFk_Usuario_Id().getId();
+        this.Carteira = Obj.getCarteira();
     }
 
+    public BigDecimal getCarteira() { 
+        return Carteira; 
+    }
     public Long getIdContaUsuario() {
         return idContaUsuario;
     }
@@ -39,5 +44,9 @@ public class ContaResponseDTO {
     }
     public void setIdContaUsuario(Long idContaUsuario) {
         this.idContaUsuario = idContaUsuario;
+    }
+    
+    public void setCarteira(BigDecimal carteira) {
+        Carteira = carteira;
     }
 }

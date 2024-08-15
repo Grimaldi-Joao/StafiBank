@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.Test.StafiBank.dto.contaDto.ContaGet;
 import com.Test.StafiBank.dto.contaDto.ContaPost;
+import com.Test.StafiBank.dto.contaDto.ContaPut;
 import com.Test.StafiBank.dto.contaDto.response.ContaResponseDTO;
 import com.Test.StafiBank.entities.Conta;
 import com.Test.StafiBank.entities.Usuario;
@@ -34,6 +36,7 @@ public class ContaResource {
 
     @Autowired
     private UsuarioService usuarioService;
+
     @GetMapping
     public ResponseEntity<List<ContaGet>> findAll() {
         List<Conta> list = service.findAll();
@@ -67,15 +70,22 @@ public class ContaResource {
         //o criate pode um objeto do tipo URI
 	}
 
-    /*@PutMapping(value = "/{id}")
-	public ResponseEntity<ContaResponseDTO> update(@PathVariable Long id,@Valid @RequestBody ContaPut objUser) {//como aqui vc prescisa reconhecer o Id e mexer com os atributos internos do usuario vc usa essas duas anotations
+    @PutMapping(value = "/{id}/deposito")
+	public ResponseEntity<ContaResponseDTO> deposito(@PathVariable Long id,@Valid @RequestBody ContaPut objUser) {//como aqui vc prescisa reconhecer o Id e mexer com os atributos internos do usuario vc usa essas duas anotations
         
-        Conta newUserPut = new Conta(null);
-        newUserPut= service.update(id, newUserPut);
-        ContaresponseNewUserUpdate = new UserResponseDTO(newUserPut); 
-		return ResponseEntity.ok().body(responseNewUserUpdate);
+        Conta newUserPut = service.findById(id);
+        newUserPut= service.depositar(id, objUser.getCarteira());
+        ContaResponseDTO ContaresponseNewUserUpdate = new ContaResponseDTO(newUserPut); 
+		return ResponseEntity.ok().body(ContaresponseNewUserUpdate);
 	}
- */
+    
+    @PutMapping(value = "/{id}/saque")
+	public ResponseEntity<ContaResponseDTO> saque(@PathVariable Long id,@Valid @RequestBody ContaPut objUser) {//como aqui vc prescisa reconhecer o Id e mexer com os atributos internos do usuario vc usa essas duas anotations
+        Conta newUserPut = service.findById(id);
+        newUserPut= service.sacar(id, objUser.getCarteira());
+        ContaResponseDTO ContaresponseNewUserUpdate = new ContaResponseDTO(newUserPut); 
+		return ResponseEntity.ok().body(ContaresponseNewUserUpdate);
+	}
     
     
 }

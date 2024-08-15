@@ -62,7 +62,7 @@ public class Conta implements Serializable {
         this.id_Conta = id_Conta;
     }
     public void setCarteira(BigDecimal carteira) {
-        Carteira = carteira;
+        this.Carteira = carteira;
     }
     public void setFk_Usuario_Id(Usuario fk_Usuario_Id) {
         this.fk_Usuario_Id = fk_Usuario_Id;

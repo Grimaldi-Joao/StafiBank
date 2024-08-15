@@ -23,6 +23,7 @@ public class UsuarioGet {
         this.id_Usuario = Obj.getId();
         this.nome = Obj.getNome();
         this.email = Obj.getEmail();
+        settipoEnum(Obj.gettipoEnum());
         
     }
 

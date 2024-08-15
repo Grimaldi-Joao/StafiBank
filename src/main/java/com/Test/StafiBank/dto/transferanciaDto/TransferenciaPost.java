@@ -7,12 +7,12 @@ public class TransferenciaPost {
     private Long id;
     private String tipo;
     private BigDecimal valor;
-    private String remetente;
-    private String destinatario;
+    private Long remetente;
+    private Long destinatario;
 
     public TransferenciaPost(){}
 
-    public TransferenciaPost(Long id, String tipo, BigDecimal valor, String remetente, String destinatario){
+    public TransferenciaPost(Long id, String tipo, BigDecimal valor, Long remetente, Long destinatario){
         this.id = id;
         this.tipo = tipo;
         this.valor = valor;
@@ -20,13 +20,13 @@ public class TransferenciaPost {
         this.destinatario = destinatario;
     }
 
-    public String getDestinatario() {
+    public Long getDestinatario() {
         return destinatario;
     }
     public Long getId() {
         return id;
     }
-    public String getRemetente() {
+    public Long getRemetente() {
         return remetente;
     }
     public String getTipo() {
@@ -35,13 +35,13 @@ public class TransferenciaPost {
     public BigDecimal getValor() {
         return valor;
     }
-    public void setDestinatario(String destinatario) {
+    public void setDestinatario(Long destinatario) {
         this.destinatario = destinatario;
     }
     public void setId(Long id) {
         this.id = id;
     }
-    public void setRemetente(String remetente) {
+    public void setRemetente(Long remetente) {
         this.remetente = remetente;
     }
     public void setTipo(String tipo) {

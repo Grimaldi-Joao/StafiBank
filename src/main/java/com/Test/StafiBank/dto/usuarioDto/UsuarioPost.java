@@ -8,7 +8,7 @@ public class UsuarioPost {
     private String nome;
     private String email;
     private String senha;
-    private Integer tipo;
+    private Integer tipo = 1;
     private String cpfCnpj;
 
     public UsuarioPost(){}

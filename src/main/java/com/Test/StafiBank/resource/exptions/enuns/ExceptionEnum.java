@@ -6,8 +6,9 @@ public enum ExceptionEnum {
     Database_error(1),
     Validation_error(2),
     New_user_error(3),
-    password_invalid(4),
-    Resource_not_found(5);
+    Email_invalid(4),
+    Resource_not_found(5),
+    CPF_ja_Utilizado(6);
 
     private int code;
 
