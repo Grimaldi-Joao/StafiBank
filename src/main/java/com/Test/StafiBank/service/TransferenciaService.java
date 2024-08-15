@@ -28,7 +28,7 @@ public class TransferenciaService {
     private TransferenciaRepository repository;
 
     @Autowired
-    private ContaService contaRepository;
+    private ContaService contaService;
 
     @Autowired
     private emailService emailService;
@@ -56,8 +56,8 @@ public Transferencia findById(Long id) {
 
     public void extorno(Long id){
         Transferencia deletada = repository.getReferenceById(id);
-        contaRepository.depositar(deletada.getRemetente().getId_Conta(), deletada.getValor_Transferencia());
-        contaRepository.sacar(deletada.getDestinatario().getId_Conta(), deletada.getValor_Transferencia());
+        contaService.depositar(deletada.getRemetente().getId_Conta(), deletada.getValor_Transferencia());
+        contaService.sacar(deletada.getDestinatario().getId_Conta(), deletada.getValor_Transferencia());
     }
 
         public void realizarTransferencia(Transferencia transferenciaPost) {
@@ -70,8 +70,8 @@ public Transferencia findById(Long id) {
             transferenciaPost.getRemetente().setCarteira(transferenciaPost.getRemetente().getCarteira().subtract(transferenciaPost.getValor_Transferencia()));
             transferenciaPost.getDestinatario().setCarteira(transferenciaPost.getDestinatario().getCarteira().add(transferenciaPost.getValor_Transferencia()));
     
-            contaRepository.update(transferenciaPost.getRemetente().getId_Conta(), transferenciaPost.getRemetente().getCarteira());
-            contaRepository.update(transferenciaPost.getDestinatario().getId_Conta(), transferenciaPost.getDestinatario().getCarteira());
+            contaService.update(transferenciaPost.getRemetente().getId_Conta(), transferenciaPost.getRemetente().getCarteira());
+            contaService.update(transferenciaPost.getDestinatario().getId_Conta(), transferenciaPost.getDestinatario().getCarteira());
     
              // Criar transferência
             Transferencia transferencia = new Transferencia(null, transferenciaPost.gettipoTransferenciaEnum(), 

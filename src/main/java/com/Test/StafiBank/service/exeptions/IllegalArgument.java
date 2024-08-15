@@ -9,7 +9,4 @@ public class IllegalArgument extends BaseExeptionInvalid {
 	public IllegalArgument(String msg, ExceptionEnum Enum) {
 		super(msg,Enum);
 	}
-	public ExceptionEnum getEnum() {
-        return Enum;
-    }
 }

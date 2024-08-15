@@ -9,8 +9,5 @@ public class DatabaseException extends BaseExeptionInvalid {
 	public DatabaseException(String msg, ExceptionEnum Enum) {
 		super(msg,Enum);
 	}
-	public ExceptionEnum getEnum() {
-        return Enum;
-    }
 }
 

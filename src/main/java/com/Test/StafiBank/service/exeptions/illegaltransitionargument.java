@@ -9,7 +9,4 @@ public class illegaltransitionargument extends BaseExeptionInvalid {
 	public illegaltransitionargument(String msg, ExceptionEnum Enum) {
 		super(msg,Enum);
 	}
-	public ExceptionEnum getEnum() {
-        return Enum;
-    }
 }

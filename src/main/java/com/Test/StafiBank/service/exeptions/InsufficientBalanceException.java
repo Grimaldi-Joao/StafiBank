@@ -9,7 +9,4 @@ public class InsufficientBalanceException extends BaseExeptionInvalid {
 	public InsufficientBalanceException(String msg, ExceptionEnum Enum) {
 		super(msg,Enum);
 	}
-	public ExceptionEnum getEnum() {
-        return Enum;
-    }
 }

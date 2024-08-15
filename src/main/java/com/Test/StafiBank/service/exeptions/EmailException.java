@@ -9,7 +9,4 @@ public class EmailException extends BaseExeptionInvalid {
 	public EmailException(String msg, ExceptionEnum Enum) {
 		super(msg,Enum);
 	}
-	public ExceptionEnum getEnum() {
-        return Enum;
-    }
 }

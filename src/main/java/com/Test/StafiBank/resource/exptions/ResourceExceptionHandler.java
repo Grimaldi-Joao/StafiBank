@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import com.Test.StafiBank.service.exeptions.BaseExeptionInvalid;
 import com.Test.StafiBank.service.exeptions.DatabaseException;
 import com.Test.StafiBank.service.exeptions.EmailException;
+import com.Test.StafiBank.service.exeptions.IllegalArgument;
 import com.Test.StafiBank.service.exeptions.InsufficientBalanceException;
 import com.Test.StafiBank.service.exeptions.ResourceNotFoundException;
+import com.Test.StafiBank.service.exeptions.illegaltransitionargument;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -32,7 +34,7 @@ public class ResourceExceptionHandler {
 		return ResponseEntity.status(status).body(err);
 	}
 
-	@ExceptionHandler(InsufficientBalanceException.class)
+	@ExceptionHandler({InsufficientBalanceException.class, IllegalArgument.class,illegaltransitionargument.class,InsufficientBalanceException.class})
 	public ResponseEntity<StandardError> Invalid(BaseExeptionInvalid e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_ACCEPTABLE;
 		StandardError err = new StandardError(Instant.now(), status.value(), e.getMessage(),e.getEnum() , request.getRequestURI());

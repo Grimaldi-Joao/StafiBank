@@ -8,7 +8,7 @@ public class UsuarioPost {
     private String nome;
     private String email;
     private String senha;
-    private Integer tipo = 1;
+    private Integer tipo;
     private String cpfCnpj;
 
     public UsuarioPost(){}
@@ -36,7 +36,7 @@ public class UsuarioPost {
         return senha;
     }
     public tipoEnum gettipoEnum() {
-        return tipoEnum.valueOf(tipo);
+        return tipoEnum.valueOf(tipo.intValue());
     }
     public void setId(Long id) {
         this.id_Usuario = id;
@@ -60,5 +60,11 @@ public class UsuarioPost {
     }
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
+    }
+    public Integer getTipo() {
+        return tipo;
+    }
+    public void setTipo(Integer tipo) {
+        this.tipo = tipo;
     }
 }
