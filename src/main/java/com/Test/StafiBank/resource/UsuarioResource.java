@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import com.Test.StafiBank.dto.usuarioDto.UsuarioGet;
 import com.Test.StafiBank.dto.usuarioDto.UsuarioPost;
 import com.Test.StafiBank.dto.usuarioDto.UsuarioPut;
@@ -45,16 +44,19 @@ public class UsuarioResource {
 
     @PostMapping
     public ResponseEntity<UsuarioResponseDTO> insert(@RequestBody UsuarioPost dto) {
-        Usuario newObj = new Usuario(dto.getId(), dto.getNome(), dto.getEmail(), dto.gettipoEnum(), dto.getCpfCnpj(), dto.getSenha());
+        Usuario newObj = new Usuario(dto.getId(), dto.getNome(), dto.getEmail(), dto.gettipoEnum(), dto.getCpfCnpj(),
+                dto.getSenha());
         usuarioService.insert(newObj);
-        UsuarioResponseDTO responseDto = new UsuarioResponseDTO(newObj.getId(), newObj.getNome(), newObj.getEmail(), newObj.gettipoEnum());
+        UsuarioResponseDTO responseDto = new UsuarioResponseDTO(newObj.getId(), newObj.getNome(), newObj.getEmail(),
+                newObj.gettipoEnum());
         return ResponseEntity.ok().body(responseDto);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UsuarioResponseDTO> update(@PathVariable Long id, @RequestBody UsuarioPut dto) {
         Usuario newObj = usuarioService.update(id, dto);
-        UsuarioResponseDTO responseDto = new UsuarioResponseDTO(newObj.getId(), newObj.getNome(), newObj.getEmail(), null);
+        UsuarioResponseDTO responseDto = new UsuarioResponseDTO(newObj.getId(), newObj.getNome(), newObj.getEmail(),
+                null);
         return ResponseEntity.ok().body(responseDto);
     }
 

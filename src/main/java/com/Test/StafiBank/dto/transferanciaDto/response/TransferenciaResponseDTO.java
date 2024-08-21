@@ -1,5 +1,7 @@
 package com.Test.StafiBank.dto.transferanciaDto.response;
 
+import java.time.LocalDateTime;
+
 import com.Test.StafiBank.entities.enun.tipoTransferenciaEnum;
 
 public class TransferenciaResponseDTO {
@@ -7,14 +9,24 @@ public class TransferenciaResponseDTO {
     private Integer tipo;
     private String remetente;
     private String destinatario;
+    private LocalDateTime momento;
 
     public TransferenciaResponseDTO(){}
 
-    public TransferenciaResponseDTO(Long id,tipoTransferenciaEnum tipo, String remetente, String destinatario){
+    public TransferenciaResponseDTO(Long id,tipoTransferenciaEnum tipo, String remetente, String destinatario, LocalDateTime momento){
         this.id = id;
-        settipoTransferenciaEnum(tipo);
+        setTipoTransferenciaEnum(tipo);
         this.remetente = remetente;
         this.destinatario = destinatario;
+        this.momento = momento;
+    }
+
+    public LocalDateTime getMomento() {
+        return momento;
+    }
+
+    public void setMomento(LocalDateTime momento) {
+        this.momento = momento;
     }
 
     public String getDestinatario() {
@@ -35,10 +47,10 @@ public class TransferenciaResponseDTO {
     public void setRemetente(String remetente) {
         this.remetente = remetente;
     }
-    public tipoTransferenciaEnum gettipoTransferenciaEnum() {
+    public tipoTransferenciaEnum getTipoTransferenciaEnum() {
         return tipoTransferenciaEnum.valueOf(tipo);
     }
-    public void settipoTransferenciaEnum(tipoTransferenciaEnum tipoTransferenciaEnum) {
+    public void setTipoTransferenciaEnum(tipoTransferenciaEnum tipoTransferenciaEnum) {
         if (tipoTransferenciaEnum != null) {
             this.tipo = tipoTransferenciaEnum.getCode();
         }

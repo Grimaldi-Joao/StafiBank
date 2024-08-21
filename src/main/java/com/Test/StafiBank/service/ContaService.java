@@ -20,48 +20,48 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ContaService {
-    
-    @Autowired
-    private ContaRepository repository;
 
-    public List<Conta> findAll(){
-        return repository.findAll();
+    @Autowired
+    private ContaRepository contaRepository;
+
+    public List<Conta> findAll() {
+        return contaRepository.findAll();
     }
 
-    public Conta findById(Long id){
-        Optional<Conta> obj = repository.findById(id);
-        return obj.orElseThrow(()-> new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found));
+    public Conta findById(Long id) {
+        Optional<Conta> obj = contaRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found));
     }
 
     public Conta insert(Conta objConta) {
-        return repository.save(objConta);
+        return contaRepository.save(objConta);
     }
 
     public Conta update(Long id, BigDecimal deposito) {
         try {
-            Conta entityUpdate = repository.getReferenceById(id);
+            Conta entityUpdate = contaRepository.getReferenceById(id);
             entityUpdate.setCarteira(entityUpdate.getCarteira());
-            return repository.save(entityUpdate);
+            return contaRepository.save(entityUpdate);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
         }
     }
 
-    public Conta depositar(Long id, BigDecimal deposito){
+    public Conta depositar(Long id, BigDecimal deposito) {
         try {
-            Conta entityUpdate = repository.getReferenceById(id);
+            Conta entityUpdate = contaRepository.getReferenceById(id);
             entityUpdate.setCarteira(entityUpdate.getCarteira().add(deposito));
-            return repository.save(entityUpdate);
+            return contaRepository.save(entityUpdate);
         } catch (InsufficientBalanceException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
         }
     }
 
-    public Conta sacar(Long id, BigDecimal saque){
+    public Conta sacar(Long id, BigDecimal saque) {
         try {
-            Conta entityUpdate = repository.getReferenceById(id);
+            Conta entityUpdate = contaRepository.getReferenceById(id);
             entityUpdate.setCarteira(entityUpdate.getCarteira().subtract(saque));
-            return repository.save(entityUpdate);
+            return contaRepository.save(entityUpdate);
         } catch (InsufficientBalanceException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
         }
@@ -69,7 +69,7 @@ public class ContaService {
 
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            contaRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found);
         } catch (DataIntegrityViolationException e) {

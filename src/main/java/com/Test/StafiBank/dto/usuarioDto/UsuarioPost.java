@@ -4,7 +4,7 @@ import com.Test.StafiBank.entities.enun.tipoEnum;
 
 public class UsuarioPost {
     
-    private Long id_Usuario;
+    private Long idUsuario;
     private String nome;
     private String email;
     private String senha;
@@ -15,16 +15,16 @@ public class UsuarioPost {
 
     public UsuarioPost(Long id,String nome,String email,tipoEnum tipo,String senha,String cpString){
         super();
-        this.id_Usuario = id;
+        this.idUsuario = id;
         this.nome = nome;
         this.email = email;
-        settipoEnum(tipo);
+        setTipoEnum(tipo);
         this.senha = senha;
         this.cpfCnpj = cpString;
     }
 
     public Long getId() {
-        return id_Usuario;
+        return idUsuario;
     }
     public String getEmail() {
         return email;
@@ -39,7 +39,7 @@ public class UsuarioPost {
         return tipoEnum.valueOf(tipo.intValue());
     }
     public void setId(Long id) {
-        this.id_Usuario = id;
+        this.idUsuario = id;
     }
     public void setEmail(String email) {
         this.email = email;
@@ -50,7 +50,7 @@ public class UsuarioPost {
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public void settipoEnum(tipoEnum tipoEnum) {
+    public void setTipoEnum(tipoEnum tipoEnum) {
         if (tipoEnum != null) {
             this.tipo = tipoEnum.getCode();
         }

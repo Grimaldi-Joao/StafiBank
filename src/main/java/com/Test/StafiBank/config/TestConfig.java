@@ -1,6 +1,7 @@
 package com.Test.StafiBank.config;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.boot.CommandLineRunner;
@@ -41,7 +42,7 @@ public class TestConfig implements CommandLineRunner{
         BigDecimal valor = new BigDecimal("100.00");
         conta1.getCarteira().add(valor);
         
-        Transferencia transferencia1 = new Transferencia(null, tipoTransferenciaEnum.Usuario_Usuario, new BigDecimal(100.00), conta1, conta2);
+        Transferencia transferencia1 = new Transferencia(tipoTransferenciaEnum.Usuario_Usuario, new BigDecimal(100.00), conta1, conta2, LocalDateTime.now());
         
         usuarioRepository.saveAll(Arrays.asList(usuario1,usuario2));
         contaRepository.saveAll(Arrays.asList(conta1,conta2));

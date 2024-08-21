@@ -20,7 +20,7 @@ public class Usuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Usuario;
+    private Long idUsuario;
     private String nome;
     private String email;
     private String cpfCnpj;
@@ -28,16 +28,17 @@ public class Usuario implements Serializable {
     private String senha;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "fk_Usuario_Id") // Referenciando o campo 'fk_Usuario_Id' em 'Conta'
+    @OneToMany(mappedBy = "fkUsuarioId") // Referenciando o campo 'fkUsuarioId' em 'Conta'
     private Set<Conta> contas = new HashSet<>();
 
-    public Usuario(){}
+    public Usuario() {
+    }
 
     public Usuario(Long idUsuario, String nome, String email, tipoEnum tipo, String cpfCnpj, String senha) {
         super();
         this.nome = nome;
         this.email = email;
-        settipoEnum(tipo);
+        setTipoEnum(tipo);
         this.cpfCnpj = cpfCnpj;
         this.senha = senha;
     }
@@ -45,65 +46,77 @@ public class Usuario implements Serializable {
     public String getCpfCnpj() {
         return cpfCnpj;
     }
+
     public Set<Conta> getContas() {
         return contas;
     }
+
     public Long getId() {
-        return id_Usuario;
+        return idUsuario;
     }
+
     public String getEmail() {
         return email;
     }
+
     public String getNome() {
         return nome;
     }
+
     public String getSenha() {
         return senha;
     }
+
     public tipoEnum gettipoEnum() {
         return tipoEnum.valueOf(tipo);
     }
+
     public void setId(Long id) {
-        this.id_Usuario = id;
+        this.idUsuario = id;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public void setNome(String nome) {
         this.nome = nome;
     }
+
     public void setSenha(String senha) {
         this.senha = senha;
     }
-    public void settipoEnum(tipoEnum tipoEnum) {
+
+    public void setTipoEnum(tipoEnum tipoEnum) {
         if (tipoEnum != null) {
             this.tipo = tipoEnum.getCode();
         }
     }
+
     public void setCpfCnpj(String cpfCnpj) {
         this.cpfCnpj = cpfCnpj;
     }
 
-    public int hashCode(){
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime*result+((id_Usuario == null) ? 0 : id_Usuario.hashCode());
+        result = prime * result + ((idUsuario == null) ? 0 : idUsuario.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj){
-        if(this == obj)
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        if(obj == null)
+        if (obj == null)
             return false;
-        if(getClass() != obj.getClass())
+        if (getClass() != obj.getClass())
             return false;
         Usuario other = (Usuario) obj;
-        if (id_Usuario == null) {
-            if(other.id_Usuario != null)
+        if (idUsuario == null) {
+            if (other.idUsuario != null)
                 return false;
-        }else if(!id_Usuario.equals(other.id_Usuario)){
+        } else if (!idUsuario.equals(other.idUsuario)) {
             return false;
         }
         return true;

@@ -1,7 +1,7 @@
 package com.Test.StafiBank.dto.usuarioDto;
 
 public class UsuarioPut {
-    private Long id_Usuario;
+    private Long idUsuario;
     private String nome;
     private String email;
     private String tipo;
@@ -17,8 +17,8 @@ public class UsuarioPut {
     public String getEmail() {
         return email;
     }
-    public Long getId_Usuario() {
-        return id_Usuario;
+    public Long getidUsuario() {
+        return idUsuario;
     }public String getNome() {
         return nome;
     }
@@ -28,8 +28,8 @@ public class UsuarioPut {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setId_Usuario(Long id_Usuario) {
-        this.id_Usuario = id_Usuario;
+    public void setidUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
     public void setNome(String nome) {
         this.nome = nome;

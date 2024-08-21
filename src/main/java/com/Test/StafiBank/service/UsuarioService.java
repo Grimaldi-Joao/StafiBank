@@ -11,7 +11,6 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
-
 import com.Test.StafiBank.dto.usuarioDto.UsuarioPut;
 import com.Test.StafiBank.entities.Usuario;
 import com.Test.StafiBank.entities.enun.tipoEnum;
@@ -26,32 +25,32 @@ import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class UsuarioService {
-    
+
     @Autowired
-    private UsuarioRepository repository;
+    private UsuarioRepository usuarioRepository;
 
     private static final String EMAIL_REGEX = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,63}$";
 
     public List<Usuario> findAll() {
-        return repository.findAll();
+        return usuarioRepository.findAll();
     }
 
     public Usuario findById(Long id) {
-    Optional<Usuario> obj = repository.findById(id);
-    return obj.orElseThrow(()-> new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found));
+        Optional<Usuario> obj = usuarioRepository.findById(id);
+        return obj.orElseThrow(() -> new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found));
     }
 
     public Usuario insert(Usuario usuario) {
         checkEmail(usuario);
         checkCPF(usuario);
-        return repository.save(usuario);
+        return usuarioRepository.save(usuario);
     }
 
     public Usuario update(Long id, UsuarioPut dto) {
         try {
-            Usuario entityUpdate = repository.getReferenceById(id);
+            Usuario entityUpdate = usuarioRepository.getReferenceById(id);
             updateData(entityUpdate, dto);
-            return repository.save(entityUpdate);
+            return usuarioRepository.save(entityUpdate);
         } catch (EntityNotFoundException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Validation_error);
         }
@@ -59,7 +58,7 @@ public class UsuarioService {
 
     public void delete(Long id) {
         try {
-            repository.deleteById(id);
+            usuarioRepository.deleteById(id);
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException(id, ExceptionEnum.Resource_not_found);
         } catch (DataIntegrityViolationException e) {
@@ -67,20 +66,20 @@ public class UsuarioService {
         }
     }
 
-    private void checkEmail(Usuario user){
-		if(repository.existsByEmail(user.getEmail()) != false){
-			throw new EmailException("Email is being used", ExceptionEnum.New_user_error);
-		}
-		Pattern pattern = Pattern.compile(EMAIL_REGEX);
+    private void checkEmail(Usuario user) {
+        if (usuarioRepository.existsByEmail(user.getEmail()) != false) {
+            throw new EmailException("Email is being used", ExceptionEnum.New_user_error);
+        }
+        Pattern pattern = Pattern.compile(EMAIL_REGEX);
         Matcher matcher = pattern.matcher(user.getEmail());
-		if (!matcher.matches()) {
-			throw new EmailException("Invalid Email", ExceptionEnum.Validation_error);
-		}
-	}
+        if (!matcher.matches()) {
+            throw new EmailException("Invalid Email", ExceptionEnum.Validation_error);
+        }
+    }
 
-    private void checkCPF(Usuario user){
-        if (repository.existsBycpfCnpj(user.getCpfCnpj()) && user.gettipoEnum() == tipoEnum.Usuario) {
-            throw new IllegalArgument("CPF já está sendo utilizado", ExceptionEnum.CPF_ja_Utilizado);
+    private void checkCPF(Usuario user) {
+        if (usuarioRepository.existsBycpfCnpj(user.getCpfCnpj()) && user.gettipoEnum() == tipoEnum.Usuario) {
+            throw new IllegalArgument("CPF is already being used", ExceptionEnum.CPF_ja_Utilizado);
         }
     }
 

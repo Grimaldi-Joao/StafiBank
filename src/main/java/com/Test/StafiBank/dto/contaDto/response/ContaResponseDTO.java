@@ -14,9 +14,9 @@ public class ContaResponseDTO {
     }
 
     public ContaResponseDTO(Conta Obj) {
-        this.idConta = Obj.getId_Conta();
-        this.nomeUsuario = Obj.getFk_Usuario_Id().getNome();
-        this.idContaUsuario = Obj.getFk_Usuario_Id().getId();
+        this.idConta = Obj.getidConta();
+        this.nomeUsuario = Obj.getfkUsuarioId().getNome();
+        this.idContaUsuario = Obj.getfkUsuarioId().getId();
         this.Carteira = Obj.getCarteira();
     }
 

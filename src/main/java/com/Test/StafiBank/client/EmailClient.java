@@ -13,6 +13,7 @@ import com.Test.StafiBank.dto.emailDto.response.EmailResponse;
 public interface EmailClient {
     
     @PostMapping(value = "/email")
-    EmailResponse email(@RequestBody EmailDto emailDto);//aqui nos puxamos o post criado no site
+    EmailResponse enviarEmail(@RequestBody EmailDto emailDto);//aqui nos puxamos o post criado no site
+    //Metodo é para ser escruti como uma ação: enviarEmail
 
 }

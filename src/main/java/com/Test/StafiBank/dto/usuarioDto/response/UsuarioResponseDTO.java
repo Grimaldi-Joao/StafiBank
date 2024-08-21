@@ -4,7 +4,7 @@ import com.Test.StafiBank.entities.enun.tipoEnum;
 
 public class UsuarioResponseDTO {
     
-    private Long id_Usuario;
+    private Long idUsuario;
     private String nome;
     private String email;
     private Integer tipo;
@@ -12,17 +12,17 @@ public class UsuarioResponseDTO {
     public UsuarioResponseDTO(){}
 
     public UsuarioResponseDTO(Long id, String nome, String email, tipoEnum tipo){
-        this.id_Usuario = id;
+        this.idUsuario = id;
         this.email = email;
         this.nome = nome;
-        settipoEnum(tipo);
+        setTipoEnum(tipo);
     }
 
     public String getEmail() {
         return email;
     }
-    public Long getId_Usuario() {
-        return id_Usuario;
+    public Long getidUsuario() {
+        return idUsuario;
     }public String getNome() {
         return nome;
     }
@@ -32,13 +32,13 @@ public class UsuarioResponseDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-    public void setId_Usuario(Long id_Usuario) {
-        this.id_Usuario = id_Usuario;
+    public void setidUsuario(Long idUsuario) {
+        this.idUsuario = idUsuario;
     }
     public void setNome(String nome) {
         this.nome = nome;
     }
-    public void settipoEnum(tipoEnum tipoEnum) {
+    public void setTipoEnum(tipoEnum tipoEnum) {
         if (tipoEnum != null) {
             this.tipo = tipoEnum.getCode();
         }

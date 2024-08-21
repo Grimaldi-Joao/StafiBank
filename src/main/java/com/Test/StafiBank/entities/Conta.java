@@ -20,81 +20,89 @@ public class Conta implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_Conta;
+    private Long idConta;
     private BigDecimal Carteira;
 
     @ManyToOne
-    @JoinColumn(name = "fk_usuario_id") // Chave estrangeira referenciando Usuario
-    private Usuario fk_Usuario_Id;
+    @JoinColumn(name = "fk_Usuario_Id") // Chave estrangeira referenciando Usuario
+    private Usuario fkUsuarioId;
 
     @OneToMany(mappedBy = "remetente")
     private List<Transferencia> transferenciasRemetente;
-    
+
     @OneToMany(mappedBy = "destinatario")
     private List<Transferencia> transferenciasDestinatario;
 
-    public Conta(){}
+    public Conta() {
+    }
 
-    public Conta(Long id, Usuario Usuario){
+    public Conta(Long id, Usuario Usuario) {
         super();
-        this.id_Conta = id;
+        this.idConta = id;
         this.Carteira = new BigDecimal(0.0);
-        this.fk_Usuario_Id = Usuario;
+        this.fkUsuarioId = Usuario;
     }
 
-    public Long getId_Conta() {
-        return id_Conta;
+    public Long getidConta() {
+        return idConta;
     }
+
     public BigDecimal getCarteira() {
         return Carteira;
     }
-    public Usuario getFk_Usuario_Id() {
-        return fk_Usuario_Id;
+
+    public Usuario getfkUsuarioId() {
+        return fkUsuarioId;
     }
+
     public List<Transferencia> getTransferenciasDestinatario() {
         return transferenciasDestinatario;
     }
+
     public List<Transferencia> getTransferenciasRemetente() {
         return transferenciasRemetente;
     }
 
-    public void setId_Conta(Long id_Conta) {
-        this.id_Conta = id_Conta;
+    public void setidConta(Long idConta) {
+        this.idConta = idConta;
     }
+
     public void setCarteira(BigDecimal carteira) {
         this.Carteira = carteira;
     }
-    public void setFk_Usuario_Id(Usuario fk_Usuario_Id) {
-        this.fk_Usuario_Id = fk_Usuario_Id;
+
+    public void setfkUsuarioId(Usuario fkUsuarioId) {
+        this.fkUsuarioId = fkUsuarioId;
     }
 
     public void setTransferenciasDestinatario(List<Transferencia> transferenciasDestinatario) {
         this.transferenciasDestinatario = transferenciasDestinatario;
     }
+
     public void setTransferenciasRemetente(List<Transferencia> transferenciasRemetente) {
         this.transferenciasRemetente = transferenciasRemetente;
     }
 
-    public int hashCode(){
+    public int hashCode() {
         final int prime = 31;
         int result = 1;
-        result = prime*result+((id_Conta == null) ? 0 : id_Conta.hashCode());
+        result = prime * result + ((idConta == null) ? 0 : idConta.hashCode());
         return result;
     }
 
     @Override
-    public boolean equals(Object obj){
-        if(this == obj)
+    public boolean equals(Object obj) {
+        if (this == obj)
             return true;
-        if(obj == null)
+        if (obj == null)
             return false;
-        if(getClass() != obj.getClass())
+        if (getClass() != obj.getClass())
             return false;
         Conta other = (Conta) obj;
-        if (id_Conta == null) {
-            if(other.id_Conta != null)
+        if (idConta == null) {
+            if (other.idConta != null)
                 return false;
-        }else if(!id_Conta.equals(other.id_Conta)){
+        } else if (!idConta.equals(other.idConta)) {
             return false;
         }
         return true;

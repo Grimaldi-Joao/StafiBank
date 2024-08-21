@@ -14,16 +14,16 @@ public class TransferenciaGet {
 
     public TransferenciaGet(Long id, tipoTransferenciaEnum tipo, String remetente, String destinatario){
         this.id = id;
-        settipoTransferenciaEnum(tipo);
+        setTipoTransferenciaEnum(tipo);
         this.remetente = remetente;
         this.destinatario = destinatario;
     }
     
     public TransferenciaGet(Transferencia Obj) {
         this.id = Obj.getId_Transferencia();
-        settipoTransferenciaEnum(Obj.gettipoTransferenciaEnum());
-        this.remetente = Obj.getRemetente().getFk_Usuario_Id().getNome();
-        this.destinatario = Obj.getDestinatario().getFk_Usuario_Id().getNome();
+        setTipoTransferenciaEnum(Obj.getTipoTransferenciaEnum());
+        this.remetente = Obj.getRemetente().getfkUsuarioId().getNome();
+        this.destinatario = Obj.getDestinatario().getfkUsuarioId().getNome();
     }
 
     public String getDestinatario() {
@@ -44,10 +44,10 @@ public class TransferenciaGet {
     public void setRemetente(String remetente) {
         this.remetente = remetente;
     }
-    public tipoTransferenciaEnum gettipoTransferenciaEnum() {
+    public tipoTransferenciaEnum getTipoTransferenciaEnum() {
         return tipoTransferenciaEnum.valueOf(tipo);
     }
-    public void settipoTransferenciaEnum(tipoTransferenciaEnum tipoTransferenciaEnum) {
+    public void setTipoTransferenciaEnum(tipoTransferenciaEnum tipoTransferenciaEnum) {
         if (tipoTransferenciaEnum != null) {
             this.tipo = tipoTransferenciaEnum.getCode();
         }

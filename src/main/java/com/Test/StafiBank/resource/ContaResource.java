@@ -32,60 +32,58 @@ import com.Test.StafiBank.service.UsuarioService;
 public class ContaResource {
 
     @Autowired
-    private ContaService service;
+    private ContaService contaService;
 
     @Autowired
     private UsuarioService usuarioService;
 
     @GetMapping
     public ResponseEntity<List<ContaGet>> findAll() {
-        List<Conta> list = service.findAll();
+        List<Conta> list = contaService.findAll();
         List<ContaGet> listDtoUsers = list.stream().map(ContaGet::new).collect(Collectors.toList());
-        
+
         return ResponseEntity.ok().body(listDtoUsers);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ContaGet> findById(@PathVariable Long id) {
-        Conta objConta = service.findById(id);
+        Conta objConta = contaService.findById(id);
         ContaGet objUserDtoGet = new ContaGet(objConta);
         return ResponseEntity.ok().body(objUserDtoGet);
     }
 
     @DeleteMapping(value = "/{id}")
-	public ResponseEntity<Void> delete(@PathVariable Long id) {
-		service.delete(id);
-		return ResponseEntity.noContent().build();
-	}
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        contaService.delete(id);
+        return ResponseEntity.noContent().build();
+    }
 
     @PostMapping
-    public ResponseEntity<ContaResponseDTO> insert(@Valid @RequestBody ContaPost objUserDTOPost) {//RequestBody serve para desserializar o objeto
+    public ResponseEntity<ContaResponseDTO> insert(@Valid @RequestBody ContaPost objUserDTOPost) {
         Usuario UsuarioConta = usuarioService.findById(objUserDTOPost.getIdUsuario());
-        Conta newUser = new Conta(null,UsuarioConta);
-		newUser = service.insert(newUser);
+        Conta newUser = new Conta(null, UsuarioConta);
+        newUser = contaService.insert(newUser);
         ContaResponseDTO responseNewUser = new ContaResponseDTO(newUser);
-		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-				.buildAndExpand(newUser.getId_Conta()).toUri();
-		return ResponseEntity.created(uri).body(responseNewUser);//nos usamos create para retornar 201, é mais apropriado para essa situação
-        //o criate pode um objeto do tipo URI
-	}
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(newUser.getidConta()).toUri();
+        return ResponseEntity.created(uri).body(responseNewUser);
+    }
 
     @PutMapping(value = "/{id}/deposito")
-	public ResponseEntity<ContaResponseDTO> deposito(@PathVariable Long id,@Valid @RequestBody ContaPut objUser) {//como aqui vc prescisa reconhecer o Id e mexer com os atributos internos do usuario vc usa essas duas anotations
-        
-        Conta newUserPut = service.findById(id);
-        newUserPut= service.depositar(id, objUser.getCarteira());
-        ContaResponseDTO ContaresponseNewUserUpdate = new ContaResponseDTO(newUserPut); 
-		return ResponseEntity.ok().body(ContaresponseNewUserUpdate);
-	}
-    
+    public ResponseEntity<ContaResponseDTO> deposito(@PathVariable Long id, @Valid @RequestBody ContaPut objUser) {
+
+        Conta newUserPut = contaService.findById(id);
+        newUserPut = contaService.depositar(id, objUser.getCarteira());
+        ContaResponseDTO ContaresponseNewUserUpdate = new ContaResponseDTO(newUserPut);
+        return ResponseEntity.ok().body(ContaresponseNewUserUpdate);
+    }
+
     @PutMapping(value = "/{id}/saque")
-	public ResponseEntity<ContaResponseDTO> saque(@PathVariable Long id,@Valid @RequestBody ContaPut objUser) {//como aqui vc prescisa reconhecer o Id e mexer com os atributos internos do usuario vc usa essas duas anotations
-        Conta newUserPut = service.findById(id);
-        newUserPut= service.sacar(id, objUser.getCarteira());
-        ContaResponseDTO ContaresponseNewUserUpdate = new ContaResponseDTO(newUserPut); 
-		return ResponseEntity.ok().body(ContaresponseNewUserUpdate);
-	}
-    
-    
+    public ResponseEntity<ContaResponseDTO> saque(@PathVariable Long id, @Valid @RequestBody ContaPut objUser) {
+        Conta newUserPut = contaService.findById(id);
+        newUserPut = contaService.sacar(id, objUser.getCarteira());
+        ContaResponseDTO ContaresponseNewUserUpdate = new ContaResponseDTO(newUserPut);
+        return ResponseEntity.ok().body(ContaresponseNewUserUpdate);
+    }
+
 }

@@ -1,5 +1,6 @@
 package com.Test.StafiBank.resource;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,39 +27,43 @@ import com.Test.StafiBank.service.TransferenciaService;
 public class TransferenciaResource {
 
     @Autowired
-    private TransferenciaService service;
+    private TransferenciaService TransferenciaService;
 
     @Autowired
-    private ContaService repository;
+    private ContaService ContaService;
 
     @GetMapping
     public ResponseEntity<List<TransferenciaGet>> findAll() {
-        List<Transferencia> list = service.findAll();
-        List<TransferenciaGet> listDtoTransgerencias = list.stream().map(TransferenciaGet::new).collect(Collectors.toList());
+        List<Transferencia> list = TransferenciaService.findAll();
+        List<TransferenciaGet> listDtoTransgerencias = list.stream().map(TransferenciaGet::new)
+                .collect(Collectors.toList());
         return ResponseEntity.ok().body(listDtoTransgerencias);
     }
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<TransferenciaGet> findById(@PathVariable Long id) {
-        Transferencia obj = service.findById(id);
+        Transferencia obj = TransferenciaService.findById(id);
         TransferenciaGet objTransferenciaGet = new TransferenciaGet(obj);
         return ResponseEntity.ok().body(objTransferenciaGet);
     }
 
     @PostMapping
-    public ResponseEntity<TransferenciaResponseDTO> realizarTransferencia(@RequestBody TransferenciaPost transferenciaPost) {
-        //Transferencia objTransferencia = service.findById(transferenciaPost.getId());
-        Conta remetente = repository.findById(transferenciaPost.getRemetente());
-        Conta destinaraio = repository.findById(transferenciaPost.getDestinatario());
-        Transferencia objTransferencia = new Transferencia(null, null, transferenciaPost.getValor(), remetente, destinaraio);
-        service.realizarTransferencia(objTransferencia);
-        TransferenciaResponseDTO transferencia = new TransferenciaResponseDTO(objTransferencia.getId_Transferencia(),objTransferencia.gettipoTransferenciaEnum(),objTransferencia.getRemetente().getFk_Usuario_Id().getNome(),objTransferencia.getDestinatario().getFk_Usuario_Id().getNome());
+    public ResponseEntity<TransferenciaResponseDTO> realizarTransferencia(
+            @RequestBody TransferenciaPost transferenciaPost) {
+        Conta remetente = ContaService.findById(transferenciaPost.getRemetente());
+        Conta destinaraio = ContaService.findById(transferenciaPost.getDestinatario());
+        Transferencia objTransferencia = new Transferencia(null, transferenciaPost.getValor(), remetente, destinaraio,
+                LocalDateTime.now());
+        TransferenciaService.realizarTransferencia(objTransferencia);
+        TransferenciaResponseDTO transferencia = new TransferenciaResponseDTO(objTransferencia.getId_Transferencia(),
+                objTransferencia.getTipoTransferenciaEnum(), objTransferencia.getRemetente().getfkUsuarioId().getNome(),
+                objTransferencia.getDestinatario().getfkUsuarioId().getNome(), objTransferencia.getMomento());
         return ResponseEntity.ok().body(transferencia);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
-        service.delete(id);
+        TransferenciaService.delete(id);
         return ResponseEntity.noContent().build();
     }
 
